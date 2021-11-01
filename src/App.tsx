@@ -1,7 +1,7 @@
 import ColorPickerForm from "./components/ColorForm";
 import { Container } from '@tymate/margaret';
 import { useEffect, useState } from "react";
-import { generatePalette, ColorsArrayType } from "./lib/colors";
+import { generatePalette, PaletteType } from "./lib/colors";
 import Palette from "./components/Palette";
 import styled from "styled-components";
 import Header from "./components/Header";
@@ -23,7 +23,7 @@ const Text = styled.p`
 function App() {
 
   const [baseColor, setBaseColor] = useState<string>('');
-  const [colors, setColors] = useState<ColorsArrayType>([]);
+  const [colors, setColors] = useState<PaletteType>([]);
 
   const handleColorSubmit = (value: string | null) => {
     setBaseColor(value ? value : '');

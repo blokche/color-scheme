@@ -1,11 +1,10 @@
-import { CSSProperties } from "react"
 import styled from 'styled-components'
-import { ColorsArrayType } from "../lib/colors"
 import { ButtonReset, Stack } from '@tymate/margaret';
 import { motion, AnimatePresence } from 'framer-motion';
+import { PaletteType } from "../lib/colors";
 
 type PaletteProps = {
-    colors: ColorsArrayType
+    colors: PaletteType
 }
 
 const BrightButton = styled(ButtonReset)`
@@ -26,10 +25,11 @@ const BrightButton = styled(ButtonReset)`
     }
 `;
 
-const PaletteContainer = styled.section`
+const PaletteContainerList = styled.ul`
     padding: 3rem 2rem;
     margin-block: 2rem;
     display: grid;
+    list-style: none;
     grid-template-columns: repeat(auto-fit, 80px);
     gap: 1rem;
     justify-content: center;
@@ -39,7 +39,16 @@ const PaletteContainer = styled.section`
     margin-inline: auto;
 `
 
-const PaletteItem = styled(ButtonReset)`
+const PaletteItem = styled.li`
+    span {
+        margin-block-start: 10px;
+        color: black;
+        font-weight: bold;
+        font-size: 0.8rem;
+    }
+`
+
+const PaletteItemButton = styled(ButtonReset)`
     width: 80px;
     aspect-ratio: 1;
     border-radius: 4px;
@@ -73,13 +82,17 @@ export default function Palette({ colors }: PaletteProps) {
             {
                 hasColors ? (
                     <motion.div variants={choregraphy} initial='from' animate='to' exit='exit'>
-                        <PaletteContainer>
-                            {colors.map((color, index) => (
-                                <PaletteItem aria-label='Copy variant' key={index} style={{
-                                    '--bg-color': color.formatRgb()
-                                } as CSSProperties}>
-                                </PaletteItem>))}
-                        </PaletteContainer>
+                        <PaletteContainerList>
+                            {colors.map(({ value, color }, index) => (
+                                <PaletteItem key={index} >
+                                    <PaletteItemButton aria-label={`Copy variant ${value * 1000}`} style={{
+                                        backgroundColor: color
+                                    }}>
+                                    </PaletteItemButton>
+                                    <span>{value * 1000}</span>
+                                </PaletteItem>
+                            ))}
+                        </PaletteContainerList>
                         <Stack direction='row' alignX='center' gap={1}>
                             <BrightButton lang='fr'>Télécharger en json</BrightButton>
                             <BrightButton>Raw</BrightButton>
