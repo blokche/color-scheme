@@ -86,6 +86,7 @@ export default function Palette({ colors }: PaletteProps) {
                             {colors.map(({ value, color }, index) => (
                                 <PaletteItem key={index} >
                                     <PaletteItemButton aria-label={`Copy variant ${value * 1000}`} style={{
+                                        '--bg-color': color,
                                         backgroundColor: color
                                     }}>
                                     </PaletteItemButton>
