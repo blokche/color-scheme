@@ -8,6 +8,8 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
   body {
     background-color: #444;
+    min-height: 100vh;
+    background: rebeccapurple linear-gradient(to bottom, #BFBEFC, #3C1271);
   }
   .visually-hidden {
     width: 1px;

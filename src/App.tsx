@@ -40,8 +40,8 @@ function App() {
 
   return (
     <>
-      <Header />
       <Wrapper>
+        <Header />
         <Text>Never waste hours on finding the perfect gradient palette again!</Text>
         <Text className='uppercase'>Just enter a color:</Text>
         <ColorPickerForm onChange={handleColorSubmit} />

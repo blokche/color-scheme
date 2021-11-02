@@ -26,12 +26,12 @@ const BrightButton = styled(ButtonReset)`
 `;
 
 const PaletteContainerList = styled.ul`
-    padding: 3rem 2rem;
+    padding: 3rem 1.6rem;
     margin-block: 2rem;
     display: grid;
     list-style: none;
-    grid-template-columns: repeat(auto-fit, 80px);
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, 90px);
+    gap: 0.5rem;
     justify-content: center;
     background: white;
     border-radius: 10px;
@@ -49,7 +49,7 @@ const PaletteItem = styled.li`
 `
 
 const PaletteItemButton = styled(ButtonReset)`
-    width: 80px;
+    width: 90px;
     aspect-ratio: 1;
     border-radius: 4px;
     background-color: var(--bg-color, transparent);
