@@ -2,8 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
-import { MargaretProvider } from '@tymate/margaret';
-import { createGlobalStyle } from 'styled-components';
+import { MargaretProvider } from '@tymate/margaret'
+import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
     margin: O;
     border: none;
   }
-`;
+`
 
 ReactDOM.render(
   <React.StrictMode>

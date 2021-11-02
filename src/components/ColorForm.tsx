@@ -1,7 +1,7 @@
-import { ChangeEvent, FormEvent, useState } from "react"
-import { Stack } from '@tymate/margaret';
-import { isValidColorValue } from '../lib/colors';
-import styled from "styled-components";
+import { ChangeEvent, FormEvent, useState } from 'react'
+import { Stack } from '@tymate/margaret'
+import { isValidColorValue } from '../lib/colors'
+import styled from 'styled-components'
 
 const Form = styled.form`
     width: clamp(200px, 100%, 600px);
@@ -33,35 +33,34 @@ type ColorPickerProps = {
 }
 
 export default function ColorForm({ onChange = () => { } }: ColorPickerProps) {
+  const [color, setColor] = useState('')
+  const [errors, setErrors] = useState<string[]>([])
 
-    const [color, setColor] = useState('');
-    const [errors, setErrors] = useState<string[]>([]);
-
-    const handleForm = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setErrors([]);
-        if (!color) {
-            setErrors(['Veuillez renseigner la couleur de base afin de générer la palette']);
-            return;
-        }
-        if (!isValidColorValue(color)) {
-            setErrors(['Format de couleur invalide']);
-            return;
-        }
-        onChange(color);
+  const handleForm = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setErrors([])
+    if (!color) {
+      setErrors(['Veuillez renseigner la couleur de base afin de générer la palette'])
+      return
     }
-
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setColor(event.target.value.toUpperCase());
-        if (isValidColorValue(event.target.value)) {
-            onChange(event.target.value);
-            setErrors([]);
-        } else {
-            onChange(null);
-        }
+    if (!isValidColorValue(color)) {
+      setErrors(['Format de couleur invalide'])
+      return
     }
+    onChange(color)
+  }
 
-    return (
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setColor(event.target.value.toUpperCase())
+    if (isValidColorValue(event.target.value)) {
+      onChange(event.target.value)
+      setErrors([])
+    } else {
+      onChange(null)
+    }
+  }
+
+  return (
         <Form onSubmit={handleForm}>
             <Stack direction='column'>
                 <label className='visually-hidden' htmlFor="color">Pick a color</label>
@@ -75,5 +74,5 @@ export default function ColorForm({ onChange = () => { } }: ColorPickerProps) {
                 </Stack>)}
             </div>
         </Form>
-    )
+  )
 }

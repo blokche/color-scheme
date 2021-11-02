@@ -1,10 +1,10 @@
-import ColorPickerForm from "./components/ColorForm";
-import { Container } from '@tymate/margaret';
-import { useEffect, useState } from "react";
-import { generatePalette, PaletteType } from "./lib/colors";
-import Palette from "./components/Palette";
-import styled from "styled-components";
-import Header from "./components/Header";
+import ColorPickerForm from './components/ColorForm'
+import { Container } from '@tymate/margaret'
+import { useEffect, useState } from 'react'
+import { generatePalette, PaletteType } from './lib/colors'
+import Palette from './components/Palette'
+import styled from 'styled-components'
+import Header from './components/Header'
 
 const Wrapper = styled(Container)`
   text-align: center;
@@ -21,20 +21,19 @@ const Text = styled.p`
 `
 
 function App() {
-
-  const [baseColor, setBaseColor] = useState<string>('');
-  const [colors, setColors] = useState<PaletteType>([]);
+  const [baseColor, setBaseColor] = useState<string>('')
+  const [colors, setColors] = useState<PaletteType>([])
 
   const handleColorSubmit = (value: string | null) => {
-    setBaseColor(value ? value : '');
+    setBaseColor(value || '')
   }
 
   useEffect(() => {
-    const palette = generatePalette(baseColor);
+    const palette = generatePalette(baseColor)
     if (palette.length) {
-      setColors(palette);
+      setColors(palette)
     } else {
-      setColors([]);
+      setColors([])
     }
   }, [baseColor])
 
@@ -48,7 +47,7 @@ function App() {
         <Palette colors={colors} />
       </Wrapper>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
