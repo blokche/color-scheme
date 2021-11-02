@@ -1,8 +1,8 @@
 import { color, HSLColor, RGBColor, hsl } from 'd3-color'
 import { interpolateHsl } from 'd3-interpolate'
 
-export type ColorType = RGBColor | HSLColor | null;
-export type ColorsArrayType = Array<HSLColor | RGBColor>;
+export type ColorType = RGBColor | HSLColor | null
+export type ColorsArrayType = Array<HSLColor | RGBColor>
 export type PaletteType = Array<{ value: number; color: string; }>
 
 export function isValidColorValue(colorValue: string): boolean {

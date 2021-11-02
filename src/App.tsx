@@ -3,8 +3,9 @@ import { Container } from '@tymate/margaret'
 import { useEffect, useState } from 'react'
 import { generatePalette, PaletteType } from './lib/colors'
 import Palette from './components/Palette'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import Header from './components/Header'
+import Logo from './components/Logo'
 
 const Wrapper = styled(Container)`
   text-align: center;
@@ -12,12 +13,18 @@ const Wrapper = styled(Container)`
   padding-inline: calc(1rem + 0.5vw);
 `
 
-const Text = styled.p`
-  font-size: 1.2em;
-  font-weight: bold;
-  &.uppercase {
+const Text = styled.p<{ size?: string; upper?: boolean }>`
+  max-width: 45ch;
+  margin-inline: auto;
+  font-size: ${(props) => props.size || '1.2em'};
+  ${props => props.upper
+  ? css`
     text-transform: uppercase;
-  }
+  `
+: ''}
+  line-height: 1.1;
+  font-weight: bold;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
 `
 
 function App() {
@@ -41,8 +48,9 @@ function App() {
     <>
       <Wrapper>
         <Header />
-        <Text>Never waste hours on finding the perfect gradient palette again!</Text>
-        <Text className='uppercase'>Just enter a color:</Text>
+        <Logo />
+        <Text size="1.4em">Never waste hours on finding the perfect gradient palette again!</Text>
+        <Text size="2em" upper>Just enter a color:</Text>
         <ColorPickerForm onChange={handleColorSubmit} />
         <Palette colors={colors} />
       </Wrapper>
