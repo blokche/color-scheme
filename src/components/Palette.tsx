@@ -12,6 +12,7 @@ type Dictionary = {
 }
 
 const BrightButton = styled(ButtonReset)`
+    --offset: 8px;
     background-color: white;
     color: black;
     padding: 1rem .5rem;
@@ -19,14 +20,38 @@ const BrightButton = styled(ButtonReset)`
     font-weight: 500;
     width: clamp(80px, 100%, 200px);
     font-size: 1.1em;
-    transition: background-color 0.2s linear;
+    position: relative;
+    transition: transform 200ms ease-in, background-color 140ms linear;
     &:focus-visible {
         outline: solid 2px white;
         outline-offset: 0.15rem;
     }
+    &:active {
+      transform: translateY(var(---offset, 5px));
+      background-color: rgb(255 255 255 / 0.1);
+      &::before {
+        transform: translateY(calc(var(---offset, 5px) * -1));
+      }
+    }
     &:focus, &:hover {
         background-color: #e2e2f3;
     }
+    &::before {
+      content: '';
+      width: calc(100% + var(---offset, 10px));
+      border-radius: inherit;
+      left: calc(var(---offset, 10px) / -2);
+      top: var(---offset, 8px);
+      position: absolute;
+      height: 100%;
+      z-index: -1;
+      filter: blur(10px);
+      transition: transform 200ms ease;
+      background-image: linear-gradient(to left,
+        #FAA8FF, #B4A8FF, #A8FFEF, #FFECA8
+        );
+      opacity: 0.8;
+}
 `
 
 const PaletteContainerList = styled.ul`
