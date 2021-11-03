@@ -7,6 +7,10 @@ type PaletteProps = {
     colors: PaletteType
 }
 
+type Dictionary = {
+    [key: string]: string;
+}
+
 const BrightButton = styled(ButtonReset)`
     background-color: white;
     color: black;
@@ -73,8 +77,35 @@ const choregraphy = {
   }
 }
 
+function getDictionary(colors: PaletteType): Dictionary {
+  return colors.reduce((acc, curr) => {
+    const key = (curr.value * 1000)
+    acc[key] = curr.raw?.formatHex() as string
+    return acc
+  }, {} as Dictionary)
+}
+
 export default function Palette({ colors }: PaletteProps) {
   const hasColors = colors.length > 0
+
+  function getRawData() {
+    const data = getDictionary(colors)
+    navigator.clipboard.writeText(JSON.stringify(data)).then(() => {
+      console.log('copy!')
+    })
+  }
+
+  function downLoadJSON() {
+    const data = getDictionary(colors)
+    const blob = new Blob([JSON.stringify(data)], { type: 'text/json' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', 'palette.json')
+    link.click()
+    URL.revokeObjectURL(url)
+    link.remove()
+  }
 
   return (
         <AnimatePresence>
@@ -95,8 +126,8 @@ export default function Palette({ colors }: PaletteProps) {
                                 ))}
                             </PaletteContainerList>
                             <Stack direction='row' alignX='center' gap={1}>
-                                <BrightButton lang='fr'>Télécharger en json</BrightButton>
-                                <BrightButton>Raw</BrightButton>
+                                <BrightButton lang='fr' onClick={downLoadJSON}>Télécharger en json</BrightButton>
+                                <BrightButton onClick={getRawData}>Raw</BrightButton>
                             </Stack>
                         </motion.div>)
                   : null
