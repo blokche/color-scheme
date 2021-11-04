@@ -1,3 +1,17 @@
+@font-face {
+  font-family: 'Rubik One Regular';
+  src:url('/fonts/Rubik-One-Regular.ttf.woff') format('woff'),
+      url('/fonts/Rubik-One-Regular.ttf.svg#Rubik-One-Regular') format('svg'),
+      url('/fonts/Rubik-One-Regular.ttf.eot'),
+      url('/fonts/Rubik-One-Regular.ttf.eot?#iefix') format('embedded-opentype'); 
+  font-weight: normal;
+  font-style: normal;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -12,7 +26,6 @@ body {
   background-image:
     url(/assets/Cube.png),
     url(/assets/Ball.png),
-    url(/assets/Ball.png),
     url(/assets/Spiral-Bottom.png),
     url(/assets/Cube-2.png),
     url(/assets/TorusBis.png),
@@ -20,12 +33,12 @@ body {
     url(/assets/Torus.png),
     url(/assets/Spiral.png),
     url(/assets/CubeBis.png),
+    url(/assets/Ball.png),
     linear-gradient(to bottom, #BFBEFC, #3C1271);
   background-repeat: no-repeat;
   background-position:
     30px 0px,
     left calc(600px + 15vw) top 40px,
-    bottom 22% right calc(120px + 20vw),
     bottom 0px right 120px,
     top 50px  right 10vw,
     left calc(-100px + 5vw) bottom 0px,
@@ -33,6 +46,7 @@ body {
     right 0px top 120px,
     top 0px left calc(180px + 10vw),
     bottom 100px right 80px,
+    bottom 22% right calc(120px + 20vw),
     top center;
 }
 
