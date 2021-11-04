@@ -1,11 +1,15 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
 import { Stack } from '@tymate/margaret'
-import { isValidColorValue } from '../lib/colors'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import styled from 'styled-components'
+import { isValidColorValue } from '../lib/colors'
 
 const Form = styled.form`
     width: clamp(200px, 100%, 600px);
     margin-inline: auto;
+`
+
+const ErrorMessage = styled.p`
+   text-shadow: 0 0 5px black;
 `
 
 const Input = styled.input`
@@ -29,7 +33,7 @@ const Input = styled.input`
 `
 
 type ColorPickerProps = {
-    onChange?: (value: string | null) => unknown
+  onChange?: (value: string | null) => unknown
 }
 
 export default function ColorForm({ onChange = () => { } }: ColorPickerProps) {
@@ -61,18 +65,18 @@ export default function ColorForm({ onChange = () => { } }: ColorPickerProps) {
   }
 
   return (
-        <Form onSubmit={handleForm}>
-            <Stack direction='column'>
-                <label className='visually-hidden' htmlFor="color">Pick a color</label>
-                <Input type="text" id='color' value={color} onChange={handleChange} />
-            </Stack>
-            <div className="errors" aria-live='assertive'>
-                {errors.length !== 0 && (<Stack direction='column'>
-                    {errors.map((error, index) => (
-                        <p key={index}>{error}</p>
-                    ))}
-                </Stack>)}
-            </div>
-        </Form>
+    <Form onSubmit={handleForm}>
+      <Stack direction='column'>
+        <label className='visually-hidden' htmlFor="color">Pick a color</label>
+        <Input type="text" id='color' value={color} onChange={handleChange} />
+      </Stack>
+      <div className="errors" aria-live='assertive'>
+        {errors.length !== 0 && (<Stack direction='column'>
+          {errors.map((error, index) => (
+            <ErrorMessage key={index}>{error}</ErrorMessage>
+          ))}
+        </Stack>)}
+      </div>
+    </Form>
   )
 }

@@ -1,4 +1,4 @@
-import { color, HSLColor, RGBColor, hsl } from 'd3-color'
+import { color, hsl, HSLColor, RGBColor } from 'd3-color'
 import { interpolateHsl } from 'd3-interpolate'
 
 export type ColorType = RGBColor | HSLColor | null

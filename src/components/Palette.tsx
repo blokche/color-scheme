@@ -1,14 +1,14 @@
-import styled from 'styled-components'
 import { ButtonReset, Stack } from '@tymate/margaret'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
+import styled from 'styled-components'
 import { PaletteType } from '../lib/colors'
 
 type PaletteProps = {
-    colors: PaletteType
+  colors: PaletteType
 }
 
 type Dictionary = {
-    [key: string]: string;
+  [key: string]: string;
 }
 
 const BrightButton = styled(ButtonReset)`
@@ -133,30 +133,30 @@ export default function Palette({ colors }: PaletteProps) {
   }
 
   return (
-        <AnimatePresence>
-            {
-                hasColors
-                  ? (
-                        <motion.div variants={choregraphy} initial='from' animate='to' exit='exit'>
-                            <PaletteContainerList>
-                                {colors.map(({ value, color }, index) => (
-                                    <PaletteItem key={index} >
-                                        <PaletteItemButton aria-label={`Copy variant ${value * 1000}`} style={{
-                                          '--bg-color': color,
-                                          backgroundColor: color
-                                        }}>
-                                        </PaletteItemButton>
-                                        <span>{value * 1000}</span>
-                                    </PaletteItem>
-                                ))}
-                            </PaletteContainerList>
-                            <Stack direction='row' alignX='center' gap={1}>
-                                <BrightButton lang='fr' onClick={downLoadJSON}>Télécharger en json</BrightButton>
-                                <BrightButton onClick={getRawData}>Raw</BrightButton>
-                            </Stack>
-                        </motion.div>)
-                  : null
-            }
-        </AnimatePresence>
+    <AnimatePresence>
+      {
+        hasColors
+          ? (
+            <motion.div variants={choregraphy} initial='from' animate='to' exit='exit'>
+              <PaletteContainerList>
+                {colors.map(({ value, color }, index) => (
+                  <PaletteItem key={index} >
+                    <PaletteItemButton aria-label={`Copy variant ${value * 1000}`} style={{
+                      '--bg-color': color,
+                      backgroundColor: color
+                    }}>
+                    </PaletteItemButton>
+                    <span>{value * 1000}</span>
+                  </PaletteItem>
+                ))}
+              </PaletteContainerList>
+              <Stack direction='row' alignX='center' gap={1} style={{ marginBlockEnd: '1rem' }}>
+                <BrightButton lang='fr' onClick={downLoadJSON}>Télécharger en json</BrightButton>
+                <BrightButton onClick={getRawData}>Raw</BrightButton>
+              </Stack>
+            </motion.div>)
+          : null
+      }
+    </AnimatePresence>
   )
 }

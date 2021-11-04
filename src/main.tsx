@@ -1,7 +1,7 @@
+import { MargaretProvider } from '@tymate/margaret'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import { MargaretProvider } from '@tymate/margaret'
 
 ReactDOM.render(
   <React.StrictMode>

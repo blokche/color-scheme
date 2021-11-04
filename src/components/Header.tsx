@@ -1,5 +1,5 @@
-import styled from 'styled-components'
 import { Stack } from '@tymate/margaret'
+import styled from 'styled-components'
 
 const HeaderWrapper = styled(Stack)`
     font-size: 1.4em;
@@ -8,10 +8,15 @@ const HeaderWrapper = styled(Stack)`
 
 export default function Header() {
   return (
-        <header>
-            <HeaderWrapper alignX="end">
-                Margaret
-            </HeaderWrapper>
-        </header>
+    <header>
+      <HeaderWrapper alignX="end">
+        <a href="https://margaret.tech/">
+          <img
+            width='136' height='34'
+            aria-label='Margaret'
+            src="/assets/margaret-logo.svg" alt="Margaret" />
+        </a>
+      </HeaderWrapper>
+    </header>
   )
 }

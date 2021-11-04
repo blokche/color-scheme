@@ -12,6 +12,27 @@
   box-sizing: border-box;
 }
 
+html::-webkit-scrollbar {
+  width: 1rem;
+  height: 8px;
+  background-color: #C4A4E5; 
+}
+
+html::-webkit-scrollbar-thumb {
+  width: 1rem;
+  border: solid 3px transparent;
+  background-clip: content-box;
+  background-color: #652D9F;
+  border-radius: 1rem;
+}
+
+@supports (scrollbar-color: #652D9F #C4A4E5) {
+  html {
+    scrollbar-color: #652D9F #C4A4E5;
+    scrollbar-width: thin;
+  }
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -22,6 +43,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #444;
   min-height: 100vh;
+  background-attachment: fixed;
   background-color: rebeccapurple;
   background-image:
     url(/assets/Cube.png),
