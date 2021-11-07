@@ -1,7 +1,9 @@
 import { ButtonReset, Stack } from '@tymate/margaret'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { PaletteType } from '../lib/colors'
+import ColorDetails, { ColorFormat } from './ColorDetails'
 
 type PaletteProps = {
   colors: PaletteType
@@ -69,7 +71,8 @@ const PaletteContainerList = styled.ul`
 `
 
 const PaletteItem = styled.li`
-    span {
+    position:relative;
+    & > span {
         margin-block-start: 10px;
         color: black;
         font-weight: bold;
@@ -80,11 +83,34 @@ const PaletteItem = styled.li`
 const PaletteItemButton = styled(ButtonReset)`
     width: 90px;
     aspect-ratio: 1;
-    border-radius: 4px;
+    border-radius: 12px;
     background-color: var(--bg-color, transparent);
     &:focus-visible {
         outline-offset: .2rem;
         outline: solid 2px var(--bg-color);
+    }
+    & + div {
+      list-style: none;
+      margin: 0;
+      position: absolute;
+      width: clamp(300px, 100px, 340px);
+      border-radius: 5px;
+      background-color: white;
+      transform: translate3d(-50%, -70%, 0);
+      top: -10%;
+      left: 50%;
+      filter: drop-shadow(0 0 3px rgb(0 0 0 / 0.5));
+      color: black;
+      z-index: 1;
+      &::before {
+        z-index: -1;
+        content: '';
+        border: solid 6px white;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 50%) rotate(45deg);
+      }
     }
 `
 
@@ -102,6 +128,21 @@ const choregraphy = {
   }
 }
 
+const dropdownVariants = {
+  from: {
+    opacity: 0,
+    transition: { duration: 0.2 }
+  },
+  to: {
+    opacity: 1,
+    transition: { duration: 0.2 }
+  },
+  exit: {
+    opacity: 0,
+    transition: { duration: 0.2 }
+  }
+}
+
 function getDictionary(colors: PaletteType): Dictionary {
   return colors.reduce((acc, curr) => {
     const key = (curr.value * 1000)
@@ -112,6 +153,19 @@ function getDictionary(colors: PaletteType): Dictionary {
 
 export default function Palette({ colors }: PaletteProps) {
   const hasColors = colors.length > 0
+  const [selection, setSelection] = useState<number | null>(null)
+  const selectedColor = selection !== null ? colors[selection]?.raw : null
+  const [colorFormat, setColorFormat] = useState<ColorFormat>('rgb')
+
+  const toggleFormat = useCallback(() => {
+    if (colorFormat === 'rgb') {
+      setColorFormat('hsl')
+    } else if (colorFormat === 'hsl') {
+      setColorFormat('hexa')
+    } else if (colorFormat === 'hexa') {
+      setColorFormat('rgb')
+    }
+  }, [colorFormat])
 
   function getRawData() {
     const data = getDictionary(colors)
@@ -119,6 +173,31 @@ export default function Palette({ colors }: PaletteProps) {
       console.log('copy!')
     })
   }
+
+  function onEscape(event: KeyboardEvent): void {
+    if (event.key === 'Escape') {
+      close()
+    }
+  }
+
+  const close = useCallback(function close() {
+    setSelection(null)
+  }, [])
+
+  useEffect(() => {
+    setSelection(null)
+  }, [hasColors])
+
+  useEffect(() => {
+    if (selection !== null) {
+      window.addEventListener('keydown', onEscape)
+    } else {
+      window.removeEventListener('keydown', onEscape)
+    }
+    return () => {
+      window.removeEventListener('keydown', onEscape)
+    }
+  }, [selection])
 
   function downLoadJSON() {
     const data = getDictionary(colors)
@@ -141,11 +220,28 @@ export default function Palette({ colors }: PaletteProps) {
               <PaletteContainerList>
                 {colors.map(({ value, color }, index) => (
                   <PaletteItem key={index} >
-                    <PaletteItemButton aria-label={`Copy variant ${value * 1000}`} style={{
-                      '--bg-color': color,
-                      backgroundColor: color
-                    }}>
+                    <PaletteItemButton onClick={() => setSelection(index)}
+                      aria-label={`Copy variant ${value * 1000}`} style={{
+                        '--bg-color': color,
+                        backgroundColor: color
+                      }}>
                     </PaletteItemButton>
+                    <AnimatePresence>
+                      {selection === index
+                        ? (
+                          <motion.div variants={dropdownVariants} initial='from' exit='exit' animate='to'>
+                            {selectedColor && (
+                              <ColorDetails
+                                onClickOutside={close}
+                                color={selectedColor}
+                                format={colorFormat}
+                                toggleFormat={toggleFormat}
+                              />
+                            )}
+                          </motion.div>
+                          )
+                        : null}
+                    </AnimatePresence>
                     <span>{value * 1000}</span>
                   </PaletteItem>
                 ))}
@@ -157,6 +253,6 @@ export default function Palette({ colors }: PaletteProps) {
             </motion.div>)
           : null
       }
-    </AnimatePresence>
+    </AnimatePresence >
   )
 }
