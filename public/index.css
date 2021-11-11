@@ -91,3 +91,17 @@ body {
   margin-inline: auto;
   margin-block: 2rem 1rem;
 }
+
+.modal {
+  text-align: center;
+  padding: 1rem;
+  background: white;
+  position: fixed;
+  bottom: var(--bottom, 1rem);
+  right: var(--right, 1.4rem);
+  border-radius: 10px;
+  width: min(100%, 260px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components'
 import ColorPickerForm from './components/ColorForm'
 import Header from './components/Header'
 import Logo from './components/Logo'
+import Notification from './components/Notification'
 import Palette from './components/Palette'
 import { generatePalette, PaletteType } from './lib/colors'
 
@@ -73,6 +74,7 @@ function App() {
         <ColorPickerForm
           onChange={handleColorSubmit} />
         <Palette colors={colors} />
+        <Notification timeout={3400} />
       </Wrapper>
     </>
   )

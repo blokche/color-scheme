@@ -1,8 +1,9 @@
-import { ButtonReset, Stack } from '@tymate/margaret'
+import { Stack } from '@tymate/margaret'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { CgColorPicker } from 'react-icons/cg'
 import styled from 'styled-components'
 import { isValidColorValue } from '../lib/colors'
+import GhostButton from './ui/GhostButton'
 
 const Form = styled.form`
     width: clamp(200px, 100%, 600px);
@@ -12,8 +13,6 @@ const Form = styled.form`
 const ErrorMessage = styled.p`
    text-shadow: 0 0 5px black;
 `
-
-const GhostButton = styled(ButtonReset)``
 
 const Input = styled.input`
     text-align: center;

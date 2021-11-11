@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { PaletteType } from '../lib/colors'
 import ColorDetails, { ColorFormat } from './ColorDetails'
+import { useNotificationContext } from './Notification'
 
 type PaletteProps = {
   colors: PaletteType
@@ -156,6 +157,7 @@ export default function Palette({ colors }: PaletteProps) {
   const [selection, setSelection] = useState<number | null>(null)
   const selectedColor = selection !== null ? colors[selection]?.raw : null
   const [colorFormat, setColorFormat] = useState<ColorFormat>('rgb')
+  const { set } = useNotificationContext()
 
   const toggleFormat = useCallback(() => {
     if (colorFormat === 'rgb') {
@@ -170,7 +172,7 @@ export default function Palette({ colors }: PaletteProps) {
   function getRawData() {
     const data = getDictionary(colors)
     navigator.clipboard.writeText(JSON.stringify(data)).then(() => {
-      console.log('copy!')
+      set('Value copied to clipbard 🤘')
     })
   }
 

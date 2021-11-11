@@ -5,6 +5,7 @@ import { MdOutlineArrowDropDown } from 'react-icons/md'
 import { useClickAway } from 'react-use'
 import styled from 'styled-components'
 import { ColorType } from '../lib/colors'
+import { useNotificationContext } from './Notification'
 
 export type ColorFormat = 'rgb' | 'hsl' | 'hexa'
 type ColorDetailsProps = {
@@ -68,6 +69,7 @@ export default function ColorDetails({
   const HSL = hsl(color.formatRgb())
   const RGB = color.rgb()
   const HEXA = color.formatHex()
+  const notificationCtx = useNotificationContext()
 
   function getCompleteValue(format: ColorFormat): string | undefined {
     if (format === 'rgb') {
@@ -107,7 +109,7 @@ export default function ColorDetails({
 
   function copyValue(event: any): void {
     navigator.clipboard.writeText(event?.target?.value).then(() => {
-      console.log('copy!')
+      notificationCtx.set('Value copied to clipboard 🤘')
     })
   }
 
