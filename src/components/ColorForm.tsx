@@ -1,5 +1,6 @@
-import { Stack } from '@tymate/margaret'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ButtonReset, Stack } from '@tymate/margaret'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { CgColorPicker } from 'react-icons/cg'
 import styled from 'styled-components'
 import { isValidColorValue } from '../lib/colors'
 
@@ -12,10 +13,11 @@ const ErrorMessage = styled.p`
    text-shadow: 0 0 5px black;
 `
 
+const GhostButton = styled(ButtonReset)``
+
 const Input = styled.input`
     text-align: center;
     width: clamp(200px, 100%, 300px);
-    margin-inline: auto;
     padding: 1rem;
     font-size: 1.2rem;
     background-color: white;
@@ -39,6 +41,13 @@ type ColorPickerProps = {
 export default function ColorForm({ onChange = () => { } }: ColorPickerProps) {
   const [color, setColor] = useState('')
   const [errors, setErrors] = useState<string[]>([])
+  const [eyeDropperOK, setEyeDropperOK] = useState(false)
+
+  useEffect(() => {
+    if ('EyeDropper' in window) {
+      setEyeDropperOK(true)
+    }
+  }, [])
 
   const handleForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -64,11 +73,34 @@ export default function ColorForm({ onChange = () => { } }: ColorPickerProps) {
     }
   }
 
+  const pickColor = async () => {
+    try {
+      const eyeDropper = new (window as any).EyeDropper()
+      const { sRGBHex } = await eyeDropper.open()
+      if (sRGBHex) {
+        const value = sRGBHex.toUpperCase()
+        setColor(value)
+        if (isValidColorValue(value)) {
+          onChange(value)
+          setErrors([])
+        } else {
+          onChange(null)
+        }
+      }
+    } catch (error) { }
+  }
+
   return (
     <Form onSubmit={handleForm}>
-      <Stack direction='column'>
+      <Stack direction='row' alignX='center'>
         <label className='visually-hidden' htmlFor="color">Pick a color</label>
         <Input type="text" id='color' value={color} onChange={handleChange} />
+        {eyeDropperOK && (
+          <GhostButton style={{ marginInlineStart: 10 }} onClick={pickColor} type='button'>
+            <CgColorPicker aria-hidden='true' size={24} />
+            <span className='visually-hidden'>Pick a color</span>
+          </GhostButton>
+        ) }
       </Stack>
       <div className="errors" aria-live='assertive'>
         {errors.length !== 0 && (<Stack direction='column'>

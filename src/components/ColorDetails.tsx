@@ -122,7 +122,8 @@ export default function ColorDetails({
           <ColorDetailsWrapper ref={ref} className={format === 'hexa' ? 'simple' : ''}>
             <ToggleButton onClick={toggleFormat}>
               <MdOutlineArrowDropDown size={28} aria-hidden='true' />
-              {uppercase(format)}</ToggleButton>
+              {uppercase(format)}
+            </ToggleButton>
             {format !== 'hexa' && (
               <>
                 <span>{labels?.[0]}</span>
